@@ -17,7 +17,7 @@ module.exports = function (sequelize, DataTypes) {
       code: {
         type: DataTypes.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
       },
     },
     {
@@ -38,11 +38,14 @@ module.exports = function (sequelize, DataTypes) {
   };
 
   Coin.createCoin = function (name, code, tOpts = {}) {
-    return Coin.create({
-      name: name,
-      code: code,
-    }, tOpts)
-  }
+    return Coin.create(
+      {
+        name: name,
+        code: code,
+      },
+      tOpts
+    );
+  };
 
   return Coin;
 };

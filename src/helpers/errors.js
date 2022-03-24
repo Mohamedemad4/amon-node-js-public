@@ -90,7 +90,7 @@ const ERRORS = [
   {
     code: 'coin_already_exists',
     status: 409,
-    description: "Coin already exists"
+    description: 'Coin already exists',
   },
   {
     code: 'entity_too_large',

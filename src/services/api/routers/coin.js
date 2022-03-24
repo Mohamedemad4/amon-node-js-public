@@ -10,7 +10,7 @@ const CoinRouter = {
 
   schemaPutCoinCode: Joi.object({
     coinCode: Joi.string().min(3).uppercase().max(5),
-    name: Joi.string()
+    name: Joi.string(),
   }),
 
   async getCoinByCode(ctx) {
@@ -26,9 +26,9 @@ const CoinRouter = {
   async putCoin(ctx) {
     const params = {
       coinCode: ctx.request.body.coinCode,
-      name: ctx.request.body.name
-    }
-    const formattedParams = await validateParams(CoinRouter.putCoinByCode, params)
+      name: ctx.request.body.name,
+    };
+    const formattedParams = await validateParams(CoinRouter.putCoinByCode, params);
     ctx.body = await CoinController.createCoin(formattedParams);
   },
 
@@ -51,12 +51,12 @@ const CoinRouter = {
      * @apiName createCoin
      * @apiGroup Coin
      * @apiDescription create coin
-     * 
-     * 
+     *
+     *
      * @apiParam {String} coinCode The code of the coin
      * @apiParam {String} name The name of the coin
      * @apiSampleRequest /createCoin
-     * 
+     *
      */
     router.put('/createCoin', CoinRouter.putCoin);
     return router;
