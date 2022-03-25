@@ -9,13 +9,13 @@ const logger = require('../modules/logger');
 module.exports.getCoinGeckoIDfromCoinCode = async function (coinCode) {
   const coinGeckoList = await superagent.get('https://api.coingecko.com/api/v3/coins/list');
   coinGeckoListing = coinGeckoList.body.find((coin) => {
-    if (coin.symbol === coinCode.toLowerCase()) return true
-  })
+    if (coin.symbol === coinCode.toLowerCase()) return true;
+  });
 
   if (coinGeckoListing) {
-    return coinGeckoListing.id
+    return coinGeckoListing.id;
   }
-  return false
+  return false;
 };
 
 /**
@@ -26,10 +26,8 @@ module.exports.getCoinGeckoIDfromCoinCode = async function (coinCode) {
 module.exports.fetchCoinPrice = async function (coinGeckoID) {
   try {
     const coinPriceInUSD = await superagent.get('https://api.coingecko.com/api/v3/simple/price', {
-
       ids: coinGeckoID,
       vs_currencies: 'USD',
-
     });
     return coinPriceInUSD.body[coinGeckoID]['usd'];
   } catch (e) {

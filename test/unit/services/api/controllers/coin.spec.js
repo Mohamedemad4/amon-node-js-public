@@ -3,7 +3,7 @@ const sinon = require('sinon');
 const sequelizeMockingMocha = require('sequelize-mocking').sequelizeMockingMocha;
 const CoinController = require(path.join(srcDir, '/services/api/controllers/coin'));
 const DB = require(path.join(srcDir, 'modules/db'));
-const { mockCoingecko, unmockCoingecko } = require('../../../../mocks/coingecko-nock')
+const { mockCoingecko, unmockCoingecko } = require('../../../../mocks/coingecko-nock');
 
 describe('Controller: Coin', () => {
   let sandbox = null;
@@ -11,12 +11,12 @@ describe('Controller: Coin', () => {
   sequelizeMockingMocha(DB.sequelize, [path.resolve('test/mocks/coins.json')], { logging: false });
 
   beforeEach(async () => {
-    mockCoingecko()
+    mockCoingecko();
     sandbox = sinon.createSandbox();
   });
 
   afterEach(() => {
-    unmockCoingecko()
+    unmockCoingecko();
     sandbox && sandbox.restore();
   });
 
@@ -33,12 +33,10 @@ describe('Controller: Coin', () => {
       const coinCode = 'BTC';
       await CoinController.getCoinByCode(coinCode); // fetch current price
 
-
       sinon.useFakeTimers(new Date(+new Date() + 60 * 1000 * 30).getTime()); // advance clock by 30m
       let coin2 = await CoinController.getCoinByCode(coinCode);
       // check if priceLastUpdated is approx 30m ago
       expect(coin2.priceLastUpdated.valueOf()).to.approximately(new Date(+new Date() - 60 * 1000 * 30).valueOf(), 1000);
-
 
       clock = sinon.useFakeTimers(new Date(+new Date() + 60 * 1000 * 31).getTime()); // advance clock by 31m
       let coin3 = await CoinController.getCoinByCode(coinCode);
