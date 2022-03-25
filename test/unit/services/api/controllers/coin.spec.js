@@ -38,7 +38,7 @@ describe('Controller: Coin', () => {
       // check if priceLastUpdated is approx 30m ago
       expect(coin2.priceLastUpdated.valueOf()).to.approximately(new Date(+new Date() - 60 * 1000 * 30).valueOf(), 1000);
 
-      clock = sinon.useFakeTimers(new Date(+new Date() + 60 * 1000 * 31).getTime()); // advance clock by 31m
+      const clock = sinon.useFakeTimers(new Date(+new Date() + 60 * 1000 * 31).getTime()); // advance clock by 31m
       let coin3 = await CoinController.getCoinByCode(coinCode);
       // check if the priceLastUpdated is now
       expect(coin3.priceLastUpdated.valueOf()).to.approximately(new Date().valueOf(), 1000);

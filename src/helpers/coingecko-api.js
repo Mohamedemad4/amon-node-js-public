@@ -8,7 +8,7 @@ const logger = require('../modules/logger');
  */
 module.exports.getCoinGeckoIDfromCoinCode = async function (coinCode) {
   const coinGeckoList = await superagent.get('https://api.coingecko.com/api/v3/coins/list');
-  coinGeckoListing = coinGeckoList.body.find((coin) => {
+  const coinGeckoListing = coinGeckoList.body.find((coin) => {
     if (coin.symbol === coinCode.toLowerCase()) return true;
   });
 
