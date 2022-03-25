@@ -19,6 +19,12 @@ module.exports = function (sequelize, DataTypes) {
         allowNull: false,
         unique: true,
       },
+      price: {
+        type: DataTypes.DECIMAL
+      },
+      priceLastUpdated: {
+        type: DataTypes.DATE
+      }
     },
     {
       freezeTableName: true,
@@ -28,7 +34,7 @@ module.exports = function (sequelize, DataTypes) {
 
   Coin.prototype.filterKeys = function () {
     const obj = this.toObject();
-    const filtered = pick(obj, 'id', 'name', 'code');
+    const filtered = pick(obj, 'id', 'name', 'code', 'price');
 
     return filtered;
   };
@@ -36,6 +42,14 @@ module.exports = function (sequelize, DataTypes) {
   Coin.findByCoinCode = function (code, tOpts = {}) {
     return Coin.findOne(Object.assign({ where: { code } }, tOpts));
   };
+
+  Coin.updateCoinPrice = async function (code, price, tOpts = {}) {
+    const coin = await Coin.findByCoinCode(code, tOpts)
+    coin.price = price
+    coin.priceLastUpdated = new Date()
+    coin.save()
+    return coin
+  }
 
   Coin.createCoin = function (name, code, tOpts = {}) {
     return Coin.create(
