@@ -19,7 +19,7 @@ describe('Model:coin', () => {
   });
 
   it('Should create', async () => {
-    const coin = await Models.Coin.createCoin('Bitcoin Cash','BCH')
+    const coin = await Models.Coin.createCoin('Bitcoin Cash', 'BCH');
 
     expect(coin.name).to.eq('Bitcoin Cash');
     expect(coin.code).to.eq('BCH');
