@@ -68,6 +68,11 @@ const ERRORS = [
     description: 'Bad parameters',
   },
   {
+    code: 'invalid_coin_code',
+    status: 400,
+    description: 'invalid coin code',
+  },
+  {
     code: 'access_denied',
     status: 401,
     description: 'You are trying to access to a forbidden resource',

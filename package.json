@@ -100,7 +100,8 @@
     "uuid": "^8.3.2",
     "winston": "^3.3.3",
     "winston-transport": "^4.4.0",
-    "ws": "^8.2.3"
+    "ws": "^8.2.3",
+    "nock": "^13.2.4"
   },
   "devDependencies": {
     "sequelize-cli": "^6.3.0"

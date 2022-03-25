@@ -19,10 +19,11 @@ describe('Model:coin', () => {
   });
 
   it('Should create', async () => {
-    const coin = await Models.Coin.createCoin('Bitcoin Cash', 'BCH');
+    const coin = await Models.Coin.createCoin('Bitcoin Cash', 'BCH', 'bitcoin-cash');
 
     expect(coin.name).to.eq('Bitcoin Cash');
     expect(coin.code).to.eq('BCH');
+    expect(coin.coinGeckoID).to.eq('bitcoin-cash');
   });
 
   it('Should find by coinCode', async () => {
@@ -33,12 +34,18 @@ describe('Model:coin', () => {
   });
 
   it('Should filterKeys', async () => {
-    const coin = await Models.Coin.create({
-      name: 'Amon',
-      code: 'AMN',
-    });
+    const coin = await Models.Coin.createCoin('Bitcoin Cash', 'BCH', 'bitcoin-cash');
 
     const filterCoin = coin.filterKeys();
     expect(Object.keys(filterCoin).length).to.eq(3);
+  });
+
+  it('Should update coin price', async () => {
+    await Models.Coin.createCoin('Bitcoin Cash', 'BCH', 'bitcoin-cash');
+    const coin = await Models.Coin.updateCoinPrice('BCH', 350);
+
+    expect(coin.price).to.eq(350);
+    // check if the dates are updated to within the "current date"
+    expect(coin.priceLastUpdated.valueOf()).to.approximately(new Date().valueOf(), 100);
   });
 });
