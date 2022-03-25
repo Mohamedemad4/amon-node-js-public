@@ -2,21 +2,20 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.addColumn('Coins', 'price', {
-      type: Sequelize.DECIMAL
-    })
+      type: Sequelize.DECIMAL,
+    });
 
     await queryInterface.addColumn('Coins', 'priceLastUpdated', {
-      type: Sequelize.DATE
-    })
+      type: Sequelize.DATE,
+    });
 
     await queryInterface.addColumn('Coins', 'coinGeckoID', {
-      type: Sequelize.STRING
-    })
-
+      type: Sequelize.STRING,
+    });
   },
-  async down(queryInterface, Sequelize) {
-    await queryInterface.removeColumn('Coins', 'price')
-    await queryInterface.removeColumn('Coins', 'priceLastUpdated')
-    await queryInterface.removeColumn('Coins', 'coinGeckoID')
-  }
+  async down(queryInterface) {
+    await queryInterface.removeColumn('Coins', 'price');
+    await queryInterface.removeColumn('Coins', 'priceLastUpdated');
+    await queryInterface.removeColumn('Coins', 'coinGeckoID');
+  },
 };
