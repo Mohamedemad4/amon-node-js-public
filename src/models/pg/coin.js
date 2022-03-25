@@ -17,6 +17,7 @@ module.exports = function (sequelize, DataTypes) {
       code: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
       },
     },
     {
@@ -34,6 +35,16 @@ module.exports = function (sequelize, DataTypes) {
 
   Coin.findByCoinCode = function (code, tOpts = {}) {
     return Coin.findOne(Object.assign({ where: { code } }, tOpts));
+  };
+
+  Coin.createCoin = function (name, code, tOpts = {}) {
+    return Coin.create(
+      {
+        name: name,
+        code: code,
+      },
+      tOpts
+    );
   };
 
   return Coin;
