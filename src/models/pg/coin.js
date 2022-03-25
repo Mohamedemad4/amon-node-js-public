@@ -20,11 +20,18 @@ module.exports = function (sequelize, DataTypes) {
         unique: true,
       },
       price: {
-        type: DataTypes.DECIMAL
+        type: DataTypes.DECIMAL,
       },
       priceLastUpdated: {
-        type: DataTypes.DATE
-      }
+        type: DataTypes.DATE,
+      },
+      // coinGecko keeps a seperate ID that's independant from both the coin symbol or "coinCode" and the coin's name
+      // since it's an authoritative source for coin data it makes sense to also keep record of what IDs it uses for each coin since it makes querying their APIs easier
+      coinGeckoID: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
     },
     {
       freezeTableName: true,
@@ -34,7 +41,7 @@ module.exports = function (sequelize, DataTypes) {
 
   Coin.prototype.filterKeys = function () {
     const obj = this.toObject();
-    const filtered = pick(obj, 'id', 'name', 'code', 'price');
+    const filtered = pick(obj, 'id', 'name', 'code', 'price','priceLastUpdated');
 
     return filtered;
   };
@@ -44,18 +51,19 @@ module.exports = function (sequelize, DataTypes) {
   };
 
   Coin.updateCoinPrice = async function (code, price, tOpts = {}) {
-    const coin = await Coin.findByCoinCode(code, tOpts)
-    coin.price = price
-    coin.priceLastUpdated = new Date()
-    coin.save()
-    return coin
-  }
+    const coin = await Coin.findByCoinCode(code, tOpts);
+    coin.price = price;
+    coin.priceLastUpdated = new Date();
+    coin.save();
+    return coin;
+  };
 
-  Coin.createCoin = function (name, code, tOpts = {}) {
+  Coin.createCoin = function (name, code, coinGeckoID, tOpts = {}) {
     return Coin.create(
       {
         name: name,
         code: code,
+        coinGeckoID: coinGeckoID,
       },
       tOpts
     );

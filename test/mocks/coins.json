@@ -4,7 +4,8 @@
     "data": {
       "id": "26a05507-0395-447a-bbbb-000000000000",
       "name": "Bitcoin",
-      "code": "BTC"
+      "code": "BTC",
+      "coinGeckoID": "bitcoin"
     }
   },
   {
@@ -12,7 +13,8 @@
     "data": {
       "id": "26a05507-0395-447a-bbbb-000000000001",
       "name": "Ethereum",
-      "code": "ETH"
+      "code": "ETH",
+      "coinGeckoID": "ethereum"
     }
   }
 ]
